@@ -1,0 +1,259 @@
+14:28:07 **** Incremental Build of configuration IntelLinux_parallel for project Student_OMP_Image ****
+makeIntelLinux.sh jall 
+
+--------------------------------------------------------
+[Runtime] : intel x86
+--------------------------------------------------------
+
+[Runtime] : Cuda  : /usr/local/cuda/lib64
+[Runtime] : Cula  : /usr/local/cula/lib64
+[Runtime] : MKL   : /opt/intel/mkl/lib/intel64
+[Runtime] : Intel : /opt/intel
+
+[Runtime] : GL/GLEW/GLU
+[Runtime] : FreeGlut
+[Runtime] : Java (JNI)
+[Runtime] : X11
+
+[Runtime] : BOOST   : /opt/api/ext/boost/[user-version]/lib/intel
+[Runtime] : OpenCV  : /opt/api/ext/opencv/[user-version]/lib
+[Runtime] : CppTest : /opt/api/ext/cpptest/[user-version]/LIB-STATIC/intel
+[Runtime] : gphoto2  : /opt/api/ext/gphoto2/[user-version]/lib
+
+[Runtime] : bilat_tools
+[Runtime] : bilat_fenetrage
+[Runtime] : bilat_opengl
+[Runtime] : bilat_image
+[Runtime] : bilat_graphe2d
+[Runtime] : bilat_multicourbe_cuda
+[Runtime] : bilat_surface
+
+--------------------------------------------------------
+[Runtime] : intel x86 : Ready!
+--------------------------------------------------------
+
+
+[INTEL] : jall
+
+icpc (ICC) 15.0.3 20150407
+Copyright (C) 1985-2015 Intel Corporation.  All rights reserved.
+
+==================================================================================
+[CBI] -> Target Name  : Student_OMP_Image_intel_x86_64
+[CBI] ->
+[CBI] -> Build     	  : /tmp/ramdrive/arc21/Targets/Student_OMP_Image/bin/Student_OMP_Image_intel_x86_64.run
+[CBI] -> Deploy       : ../RELEASE/bin
+[CBI] ->
+[CBI] -> Type	 	  : EXE
+[CBI] -> Arch	 	  : x86_64
+[CBI] -> OS	 		  : Linux
+[CBI] -> User	 	  : arc21
+[CBI] ->
+[CBI] -> Task		  : Compiling-Linking
+==================================================================================
+
+[CBI] -> SRC AUX (Recursif) :
+[CBI] ->
+[CBI] ->              : ../BilatTools_CPP/src/core
+[CBI] ->              : ../BilatTools_Image/src/core
+[CBI] ->              : ../BilatTools_OMP/src/core
+[CBI] ->              : ../BilatTools_OpenCV/src/core
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable/BIN/intel
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable_GL/BIN/intel
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_FreeGlut_Tools/BIN/intel
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_FreeGlut/BIN/intel
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_GL/BIN/intel
+[CBI] ->              : /opt/api/cbi/opengl/201/Bilat_OpenGL_Tools/BIN/intel
+
+[CBI] -> CXXFLAGS (Partial) :
+[CBI] ->
+[CBI] ->              : -O3
+[CBI] ->              : -axSSE4.2
+[CBI] ->              : -fast
+[CBI] ->              : -openmp
+[CBI] ->              : -par-threshold100
+[CBI] ->              : -parallel
+[CBI] ->              : -std=c++11
+[CBI] ->              : -w
+
+[CBI] -> LDFLAGS (Partial) :
+[CBI] ->
+
+[CBI] -> INC_PATH (auto detect):
+[CBI] ->              : ../BilatTools_CPP/src/core/tools/header/
+[CBI] ->              : ../BilatTools_CPP/src/core/tools/header/namespace_cpu/
+[CBI] ->              : ../BilatTools_Image/src/core/tools/imp/
+[CBI] ->              : ../BilatTools_Image/src/core/tools/imp/api_animateur/
+[CBI] ->              : ../BilatTools_Image/src/core/tools/imp/api_image_link/
+[CBI] ->              : ../BilatTools_Image/src/core/tools/imp/api_viewer/
+[CBI] ->              : ../BilatTools_Image/src/core/tools/spec/
+[CBI] ->              : ../BilatTools_OMP/src/core/OMP_Tools/header/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/capture/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/capture/video/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/capture/webcam/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/show/shapeOverlay/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/show/shapeOverlay/appearance/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/show/shapeOverlay/drawer/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/show/shapeOverlay/shape/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/show/view/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/show/view/viewer/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/show/view/viewerMat/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/tools/
+[CBI] ->              : ../BilatTools_OpenCV/src/core/tools/cpu/
+[CBI] ->              : src/core/01_Rippling/a_animable/
+[CBI] ->              : src/core/01_Rippling/a_animable/math/
+[CBI] ->              : src/core/01_Rippling/b_provider/
+[CBI] ->              : src/core/02_Mandelbrot_Julia/a_animable/
+[CBI] ->              : src/core/02_Mandelbrot_Julia/a_animable/math/
+[CBI] ->              : src/core/02_Mandelbrot_Julia/b_provider/
+[CBI] ->              : src/core/03_Raytracing/
+[CBI] ->              : src/core/03_Raytracing/a_animable/
+[CBI] ->              : src/core/03_Raytracing/a_animable/math/
+[CBI] ->              : src/core/03_Raytracing/b_provider/
+
+[CBI] -> LIB_PATH (auto detect):
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable/BIN/intel/
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable_GL/BIN/intel/
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_FreeGlut_Tools/BIN/intel/
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_FreeGlut/BIN/intel/
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_GL/BIN/intel/
+[CBI] ->              : /opt/api/cbi/opengl/201/Bilat_OpenGL_Tools/BIN/intel/
+
+[CBI] -> API_INC :
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable/INC
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable/INC/primitives
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable_GL/INC
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable_GL/INC/primitives
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_FreeGlut_Tools/INC
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_FreeGlut/INC
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_FreeGlut/INC/common
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_FreeGlut/INC/cpu
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_GL/INC
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_GL/INC/common
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_GL/INC/cpu
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_GL/INC/extra
+[CBI] ->              : /opt/api/cbi/opengl/201/Bilat_OpenGL_Tools/INC
+[CBI] ->              : /opt/api/cbi/tools/201/Bilat_tools_dll/INC
+[CBI] ->              : /opt/api/ext/opencv/2411/include
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/calib3d
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/contrib
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/core
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/features2d
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/flann
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/gpu
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/highgui
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/imgproc
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/legacy
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/ml
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/nonfree
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/objdetect
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/ocl
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/photo
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/stitching
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/superres
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/ts
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/video
+[CBI] ->              : /opt/api/ext/opencv/2411/include/opencv2/videostab
+[CBI] ->              : /usr/include/X11
+
+[CBI] -> API_LIB :
+[CBI] ->              : /opt/api/ext/opencv/2411/lib
+[CBI] ->              : /usr/lib/x86_64-linux-gnu
+
+[CBI] -> API_BIN :
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable/BIN/intel
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_Displayable_GL/BIN/intel
+[CBI] ->              : /opt/api/cbi/fenetrage/201/Bilat_Fenetrage_FreeGlut_Tools/BIN/intel
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_FreeGlut/BIN/intel
+[CBI] ->              : /opt/api/cbi/image/201/Bilat_Image_GL/BIN/intel
+[CBI] ->              : /opt/api/cbi/opengl/201/Bilat_OpenGL_Tools/BIN/intel
+[CBI] ->              : /opt/api/ext/opencv/2411/lib
+
+[CBI] -> API_LIBRARIES :
+[CBI] ->              : GL
+[CBI] ->              : GLEW
+[CBI] ->              : GLU
+[CBI] ->              : X11
+[CBI] ->              : opencv_calib3d_gcc48_cuda70
+[CBI] ->              : opencv_contrib_gcc48_cuda70
+[CBI] ->              : opencv_core_gcc48_cuda70
+[CBI] ->              : opencv_features2d_gcc48_cuda70
+[CBI] ->              : opencv_flann_gcc48_cuda70
+[CBI] ->              : opencv_gpu_gcc48_cuda70
+[CBI] ->              : opencv_highgui_gcc48_cuda70
+[CBI] ->              : opencv_imgproc_gcc48_cuda70
+[CBI] ->              : opencv_legacy_gcc48_cuda70
+[CBI] ->              : opencv_ml_gcc48_cuda70
+[CBI] ->              : opencv_nonfree_gcc48_cuda70
+[CBI] ->              : opencv_objdetect_gcc48_cuda70
+[CBI] ->              : opencv_ocl_gcc48_cuda70
+[CBI] ->              : opencv_photo_gcc48_cuda70
+[CBI] ->              : opencv_stitching_gcc48_cuda70
+[CBI] ->              : opencv_superres_gcc48_cuda70
+[CBI] ->              : opencv_video_gcc48_cuda70
+[CBI] ->              : opencv_videostab_gcc48_cuda70
+
+
+[CBI] -> Compilation parallel (12 threads)
+
+
+[CBI] -> Linking to   : /tmp/ramdrive/arc21/Targets/Student_OMP_Image/bin/Student_OMP_Image_intel_x86_64.run
+
+[CBI] -> Library Link :
+[CBI] ->              : -L/usr/lib/x86_64-linux-gnu
+[CBI] ->              : -lBilat_Fenetrage_Displayable_201_intel_x86_64
+[CBI] ->              : -lBilat_Fenetrage_Displayable_GL_201_intel_x86_64
+[CBI] ->              : -lBilat_Fenetrage_FreeGlut_Tools_201_intel_x86_64
+[CBI] ->              : -lBilat_Image_FreeGlut_201_intel_x86_64
+[CBI] ->              : -lBilat_Image_GL_201_intel_x86_64
+[CBI] ->              : -lBilat_OpenGL_Tools_201_intel_x86_64
+[CBI] ->              : -lGL
+[CBI] ->              : -lGLEW
+[CBI] ->              : -lGLU
+[CBI] ->              : -lX11
+[CBI] ->              : -lglut
+[CBI] ->              : -liomp5
+[CBI] ->              : -lopencv_calib3d_gcc48_cuda70
+[CBI] ->              : -lopencv_contrib_gcc48_cuda70
+[CBI] ->              : -lopencv_core_gcc48_cuda70
+[CBI] ->              : -lopencv_features2d_gcc48_cuda70
+[CBI] ->              : -lopencv_flann_gcc48_cuda70
+[CBI] ->              : -lopencv_gpu_gcc48_cuda70
+[CBI] ->              : -lopencv_highgui_gcc48_cuda70
+[CBI] ->              : -lopencv_imgproc_gcc48_cuda70
+[CBI] ->              : -lopencv_legacy_gcc48_cuda70
+[CBI] ->              : -lopencv_ml_gcc48_cuda70
+[CBI] ->              : -lopencv_nonfree_gcc48_cuda70
+[CBI] ->              : -lopencv_objdetect_gcc48_cuda70
+[CBI] ->              : -lopencv_ocl_gcc48_cuda70
+[CBI] ->              : -lopencv_photo_gcc48_cuda70
+[CBI] ->              : -lopencv_stitching_gcc48_cuda70
+[CBI] ->              : -lopencv_superres_gcc48_cuda70
+[CBI] ->              : -lopencv_video_gcc48_cuda70
+[CBI] ->              : -lopencv_videostab_gcc48_cuda70
+
+==================================================================================
+[CBI] -> Target Name  : Student_OMP_Image_intel_x86_64
+[CBI] -> Location     : /tmp/ramdrive/arc21/Targets/Student_OMP_Image/bin/Student_OMP_Image_intel_x86_64.run
+[CBI] -> Deploy 	  : ../RELEASE/bin
+[CBI] ->
+[CBI] -> Type	 	  : EXE
+[CBI] -> Arch	 	  : x86_64
+[CBI] -> OS	 		  : Linux
+[CBI] -> User	 	  : arc21
+[CBI] ->
+[CBI] -> Compilateur  : INTEL (icpc)
+[CBI] -> Task	      : End Compiling-Linking !
+[CBI] -> Time		  : 0 (s)
+==================================================================================
+
+
+[CBI] -> Deploying    : ../RELEASE/bin/Student_OMP_Image_intel_x86_64.run
+
+[CBI] -> Student_OMP_Image_intel_x86_64 : End ALL!
+
+
+14:28:13 Build Finished (took 6s.90ms)
+

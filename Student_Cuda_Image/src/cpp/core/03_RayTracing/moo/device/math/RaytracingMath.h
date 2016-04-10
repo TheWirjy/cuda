@@ -1,0 +1,102 @@
+#pragma once
+#include <iostream>
+#include <stdlib.h>
+#include <math.h>
+#include "MathTools.h"
+
+#include "Calibreur_GPU.h"
+#include "ColorTools_GPU.h"
+#include "Sphere.h"
+using namespace gpu;
+
+using std::cout;
+using std::endl;
+
+/*----------------------------------------------------------------------*\
+ |*			Declaration 					*|
+ \*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+ |*		Public			*|
+ \*-------------------------------------*/
+
+class RaytracingMath
+    {
+
+	/*--------------------------------------*\
+	|*		Constructor		*|
+	 \*-------------------------------------*/
+
+    public:
+
+	__device__ RaytracingMath(uint t) : calibreur(Interval<float>(1.0, t), Interval<float>(0.0, 1.0))
+	    {
+	    this->t = t;
+	    }
+
+	__device__ virtual ~RaytracingMath() {}
+
+	/*--------------------------------------*\
+	|*		Methodes		*|
+	 \*-------------------------------------*/
+
+    public:
+
+	__device__
+	void colorIJ(uchar4* ptrColor, Sphere* ptrDevSphere, uint nbSphere, float x, float y, float t)
+	    {
+	    float2 xy;
+	    xy.x = x;
+	    xy.y = y;
+
+	    float h = 0;
+	    float b = 0;
+	    float smallestDistance = 5000;
+
+	    for (int i = 0; i < nbSphere; i++)
+		{
+		float h2 = ptrDevSphere[i].hCarre(xy);
+
+		if (ptrDevSphere[i].isEnDessous(h2))
+		    {
+		    float dZ = ptrDevSphere[i].dz(h2);
+		    float dist = ptrDevSphere[i].distance(dZ);
+
+		    if (dist < smallestDistance)
+			{
+			smallestDistance = dist;
+			b = ptrDevSphere[i].brightness(dZ);
+			h = f(t, ptrDevSphere[i].getHueStart());
+			}
+		    }
+		}
+
+	    ColorTools::HSB_TO_RVB(h,1, b ,ptrColor);
+
+	    ptrColor->w = 255; // opaque
+	    }
+
+    protected:
+
+	__device__
+	float f(float t, float hueStart)
+	    {
+	    float pi3div2 = 3 * PI_FLOAT / 2;
+	    float T = asinf(2 * hueStart - 1) - pi3div2;
+	    return 1.0 / 2 + 1.0 / 2 * sinf(t + pi3div2 + T);
+	    }
+
+	/*--------------------------------------*\
+	|*		Attributs		*|
+	 \*-------------------------------------*/
+
+	// Input
+	uint t;
+
+	// Tools
+	Calibreur<float> calibreur;
+    };
+
+/*----------------------------------------------------------------------*\
+ |*			End	 					*|
+ \*---------------------------------------------------------------------*/

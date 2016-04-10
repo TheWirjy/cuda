@@ -1,0 +1,118 @@
+#include <iostream>
+#include <assert.h>
+
+#include "Device.h"
+#include "Raytracing.h"
+#include "DomaineMath_GPU.h"
+#include "Sphere.h"
+#include "AleaTools.h"
+using namespace gpu;
+using std::cout;
+using std::endl;
+
+/*----------------------------------------------------------------------*\
+ |*			Declaration 					*|
+ \*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+ |*		Imported	 	*|
+ \*-------------------------------------*/
+
+extern __global__ void raytracing(uchar4* ptrDevPixels, int w, int h, Sphere* ptrDevSpheres, int n, float t);
+
+/*--------------------------------------*\
+ |*		Public			*|
+ \*-------------------------------------*/
+
+/*--------------------------------------*\
+ |*		Private			*|
+ \*-------------------------------------*/
+
+/*----------------------------------------------------------------------*\
+ |*			Implementation 					*|
+ \*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+ |*		Public			*|
+ \*-------------------------------------*/
+
+/*-------------------------*\
+ |*	Constructeur	    *|
+ \*-------------------------*/
+
+Raytracing::Raytracing(int w, int h) : Animable_I<uchar4>
+    {
+        this->nbSphere = 50;
+        this->tabSphere = new Sphere[nbSphere];
+
+        // Dimension
+        this->w = w;
+        this->h = h;
+        this->t = 0;
+        this->dg = dim3(32, 2, 1);
+        this->db = dim3(16, 16, 1);
+
+        Grid grid(dg, db);
+
+        AleaTools aleaTools = AleaTools();
+        float bord = 200;
+        for(int i=0;i<nbSphere;i++)
+    	    {
+    	    float rayon = aleaTools.uniformeAB(20, this->w / 10);
+    	    float x = aleaTools.uniformeAB(bord, this->h - bord);
+    	    float y = aleaTools.uniformeAB(bord, this->w - bord);
+    	    float z = aleaTools.uniformeAB(10, 2 * this->w);
+    	    float hue = aleaTools.uniforme01();
+    	    tabSphere[i] = Sphere(x,y,z,rayon,hue);
+    	    }
+        this->title = "Raytracing_Cuda";
+
+    }
+
+Raytracing::~Raytracing()
+    {
+    delete[] tabSphere;
+    }
+
+/*-------------------------*\
+ |*	Methode		    *|
+ \*-------------------------*/
+
+/**
+ * Override
+ * Call periodicly by the API
+ *
+ * Note : domaineMath pas use car pas zoomable
+ */
+void Raytracing::process(uchar4* ptrDevPixels, int w, int h, const DomaineMath& domaineMath)
+    {
+    Sphere* ptrDevSphere=NULL;
+    size_t size = this->nbSphere*sizeof(Sphere);
+    HANDLE_ERROR(cudaMalloc(&ptrDevSphere,size));
+    HANDLE_ERROR(cudaMemcpy(ptrDevSphere, this->tabSphere,size,cudaMemcpyHostToDevice));
+
+    raytracing<<<dg,db>>>(ptrDevPixels,ptrDevSphere,this->nbSphere, w, h, this->t);
+    // le kernel est importer ci-dessus (ligne 19)
+
+    Device::lastCudaError("raytracing rgba uchar4 (after)"); // facultatif, for debug only, remove for release
+
+    HANDLE_ERROR(cudaFree(ptrDevSphere));
+    }
+
+/**
+ * Override
+ * Call periodicly by the API
+ */
+void Raytracing::animationStep()
+    {
+    t += 0.1;
+    }
+
+/*--------------------------------------*\
+ |*		Private			*|
+ \*-------------------------------------*/
+
+/*----------------------------------------------------------------------*\
+ |*			End	 					*|
+ \*---------------------------------------------------------------------*/
+

@@ -1,0 +1,94 @@
+#include <iostream>
+#include <assert.h>
+
+#include "Device.h"
+#include "MandelbrotJulia.h"
+#include "DomaineMath_GPU.h"
+using namespace gpu;
+using std::cout;
+using std::endl;
+
+/*----------------------------------------------------------------------*\
+ |*			Declaration 					*|
+ \*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+ |*		Imported	 	*|
+ \*-------------------------------------*/
+
+extern __global__ void mandelbrotJulia(uchar4* ptrDevPixels,uint w, uint h,float n, DomaineMath domaineMath);
+
+/*--------------------------------------*\
+ |*		Public			*|
+ \*-------------------------------------*/
+
+/*--------------------------------------*\
+ |*		Private			*|
+ \*-------------------------------------*/
+
+/*----------------------------------------------------------------------*\
+ |*			Implementation 					*|
+ \*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+ |*		Public			*|
+ \*-------------------------------------*/
+
+/*-------------------------*\
+ |*	Constructeur	    *|
+ \*-------------------------*/
+
+MandelbrotJulia::MandelbrotJulia(const Grid& grid, uint w, uint h, float dt, uint n, const DomaineMath& domaineMath) :
+	Animable_I<uchar4>(grid, w, h, "Mandelbrot_Julia_CUDA_RGBA_uchar4",domaineMath), variateurAnimation(Interval<int>(10, 20), dt)
+    {
+
+    this->n = n;
+    // Inputs
+    this->dt = dt;
+
+    // Tools
+    this->t = 30; // protected dans Animable
+    }
+
+MandelbrotJulia::~MandelbrotJulia()
+    {
+    // rien
+    }
+
+/*-------------------------*\
+ |*	Methode		    *|
+ \*-------------------------*/
+
+/**
+ * Override
+ * Call periodicly by the API
+ *
+ * Note : domaineMath pas use car pas zoomable
+ */
+void MandelbrotJulia::process(uchar4* ptrDevPixels, uint w, uint h, const DomaineMath& domaineMath)
+    {
+    Device::lastCudaError("fractale rgba uchar4 (before)"); // facultatif, for debug only, remove for release
+
+    mandelbrotJulia<<<dg,db>>>(ptrDevPixels,w,h,t, domaineMath);
+    // le kernel est importer ci-dessus (ligne 19)
+
+    Device::lastCudaError("fractale rgba uchar4 (after)"); // facultatif, for debug only, remove for release
+    }
+
+/**
+ * Override
+ * Call periodicly by the API
+ */
+void MandelbrotJulia::animationStep()
+    {
+    t = variateurAnimation.varierAndGet();
+    }
+
+/*--------------------------------------*\
+ |*		Private			*|
+ \*-------------------------------------*/
+
+/*----------------------------------------------------------------------*\
+ |*			End	 					*|
+ \*---------------------------------------------------------------------*/
+

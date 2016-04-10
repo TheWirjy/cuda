@@ -1,0 +1,96 @@
+#include "Indice2D.h"
+#include "IndiceTools_GPU.h"
+#include "cudaTools.h"
+#include "Device.h"
+#include "RaytracingMath.h"
+#include "Sphere.h"
+
+#define USE_SM false
+
+/*----------------------------------------------------------------------*\
+|*			Declaration                     *|
+\*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+|*		Imported	    *|
+\*-------------------------------------*/
+
+/*--------------------------------------*\
+|*		Public			*|
+\*-------------------------------------*/
+
+__global__ void raytracing(uchar4* ptrDevPixels, Sphere* ptrDevSphere, uint nbSphere, uint w, uint h, float t);
+
+/*--------------------------------------*\
+|*		Private			*|
+\*-------------------------------------*/
+
+static __device__ void copyGMtoSM(Sphere* tabSpheresSM, Sphere* ptrDevSpheresGM, uint nbSphere);
+
+static __device__ void work(uint w, uint h, uint nbSphere, float t, Sphere* ptrSpheres, uchar4* ptrDevPixels);
+
+/*----------------------------------------------------------------------*\
+|*			Implementation                  *|
+\*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+|*		Public			*|
+\*-------------------------------------*/
+
+__global__ void raytracing(uchar4* ptrDevPixels, Sphere* ptrDevSphere, uint nbSphere, uint w, uint h, float t)
+    {
+#if USE_SM
+       extern __shared__ Sphere tabSpheresSM[];
+       copyGMtoSM(tabSpheresSM, ptrDevSphere, n);
+       __syncthreads();
+       work(w, h, nbSphere, t, tabSpheresSM, ptrDevPixels);
+#else
+       work(w, h, nbSphere, t, ptrDevSphere, ptrDevPixels);
+#endif
+
+    }
+
+/*--------------------------------------*\
+|*		Private			*|
+\*-------------------------------------*/
+
+__device__
+void work(uint w, uint h, uint nbSphere, float t, Sphere* ptrDevSphere, uchar4* ptrDevPixels)
+{
+    RaytracingMath raytracingMath = RaytracingMath(t); // ici pour preparer cuda
+
+    const int WH = w * h;
+
+    const int NB_THREAD = Indice2D::nbThread();
+    const int TID = Indice2D::tid();
+
+    int s = TID;
+
+    int i;
+    int j;
+    while (s < WH)
+	{
+	IndiceTools::toIJ(s, w, &i, &j);
+	raytracingMath.colorIJ(&ptrDevPixels[s],ptrDevSphere,nbSphere, i,j,t);
+	s += NB_THREAD;
+	}
+}
+
+__device__
+void copyGMtoSM(Sphere* tabSpheresSM, Sphere* ptrDevSpheresGM, uint nbSphere)
+{
+        const int TID_LOCAL = Indice2D::tidLocal();
+        const int NB_THREAD_BLOCK = Indice2D::nbThreadBlock();
+
+        int s = TID_LOCAL;
+
+        while (s < nbSphere)
+        {
+                tabSpheresSM[s] = ptrDevSpheresGM[s];
+                s += NB_THREAD_BLOCK;
+        }
+}
+
+/*----------------------------------------------------------------------*\
+|*			End	                    *|
+\*---------------------------------------------------------------------*/

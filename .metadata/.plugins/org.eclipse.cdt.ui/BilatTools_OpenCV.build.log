@@ -1,0 +1,9 @@
+18:29:11 **** Build of configuration IntelWin_parallel for project BilatTools_OpenCV ****
+makeIntelWin.bat jall 
+Cannot run program "makeIntelWin.bat": Unknown reason
+
+Error: Program "makeIntelWin.bat" not found in PATH
+PATH=[/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/etc/cbi/dev/make]
+
+18:29:11 Build Finished (took 2ms)
+

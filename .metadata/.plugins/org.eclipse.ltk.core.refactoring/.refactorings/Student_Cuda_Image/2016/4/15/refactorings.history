@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Student_Cuda_Image/src/cpp/core/03_RayTracing/moo/host/Raytracing.cpp&apos; to &apos;Raytracing.cu&apos;" description="Rename resource &apos;Raytracing.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/cpp/core/03_RayTracing/moo/host/Raytracing.cpp" name="Raytracing.cu" stamp="1460207035004" updateReferences="true"/>
+</session>

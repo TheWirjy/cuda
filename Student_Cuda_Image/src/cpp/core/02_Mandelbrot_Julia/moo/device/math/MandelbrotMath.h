@@ -1,0 +1,75 @@
+#pragma once
+#include <iostream>
+#include <stdlib.h>
+#include <math.h>
+#include "MathTools.h"
+#include "FractaleMath.h"
+
+#include "Calibreur_GPU.h"
+#include "ColorTools_GPU.h"
+using namespace gpu;
+
+using std::cout;
+using std::endl;
+
+/*----------------------------------------------------------------------*\
+ |*			Declaration 					*|
+ \*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+ |*		Public			*|
+ \*-------------------------------------*/
+
+class MandelbrotMath : public FractaleMath
+    {
+
+	/*--------------------------------------*\
+	|*		Constructor		*|
+	 \*-------------------------------------*/
+
+    public:
+	__device__
+	MandelbrotMath(uint n) : FractaleMath(n)
+	    {
+	    }
+
+	// constructeur copie automatique car pas pointeur dans
+	//	DamierMath
+	// 	calibreur
+	// 	IntervalF
+	__device__
+	virtual ~MandelbrotMath()
+	    {
+	    // rien
+	    }
+
+	/*--------------------------------------*\
+	|*		Methodes		*|
+	 \*-------------------------------------*/
+
+    protected:
+
+	__device__
+	virtual int getIndice(float x, float y)
+	    {
+	    float a = 0;
+	    float b = 0;
+	    int k = 0;
+
+	    float aCopy;
+
+	    while(k <= this->n  && !isDivergent(a, b))
+		{
+		aCopy = a;
+		a = (a*a - b*b) + x;
+		b = 2 * aCopy * b + y;
+		k++;
+		}
+
+	    return k;
+	    }
+    };
+
+/*----------------------------------------------------------------------*\
+ |*			End	 					*|
+ \*---------------------------------------------------------------------*/

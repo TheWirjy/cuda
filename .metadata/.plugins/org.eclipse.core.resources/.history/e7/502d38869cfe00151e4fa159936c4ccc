@@ -1,0 +1,70 @@
+#include "Indice2D.h"
+#include "IndiceTools_GPU.h"
+#include "cudaTools.h"
+#include "Device.h"
+#include "RaytracingMath.h"
+#include "Sphere.h"
+
+#define USE_SM true
+
+/*----------------------------------------------------------------------*\
+|*			Declaration                     *|
+\*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+|*		Imported	    *|
+\*-------------------------------------*/
+
+/*--------------------------------------*\
+|*		Public			*|
+\*-------------------------------------*/
+
+__global__ void raytracing(uchar4* ptrDevPixels, Sphere* ptrDevSphere, uint nbSphere, uint w, uint h, float t);
+
+/*--------------------------------------*\
+|*		Private			*|
+\*-------------------------------------*/
+
+static __device__ void copyGMtoSM(Sphere* tabSpheresSM, Sphere* ptrDevSpheresGM, int n);
+
+static __device__ void work(int w, int h, int n, float t, Sphere* ptrSpheres, uchar4* ptrDevPixels);
+
+/*----------------------------------------------------------------------*\
+|*			Implementation                  *|
+\*---------------------------------------------------------------------*/
+
+/*--------------------------------------*\
+|*		Public			*|
+\*-------------------------------------*/
+
+
+
+/*--------------------------------------*\
+|*		Private			*|
+\*-------------------------------------*/
+
+__global__ void raytracing(uchar4* ptrDevPixels, Sphere* ptrDevSphere, uint nbSphere, uint w, uint h, float t)
+    {
+    RaytracingMath raytracingMath = RaytracingMath(t); // ici pour preparer cuda
+
+    const int WH = w * h;
+
+    const int NB_THREAD = Indice2D::nbThread();
+    const int TID = Indice2D::tid();
+
+    int s = TID;
+
+    int i;
+    int j;
+    while (s < WH)
+	{
+	IndiceTools::toIJ(s, w, &i, &j);
+	raytracingMath.colorIJ(&ptrDevPixels[s],ptrDevSphere,nbSphere, i,j,t);
+	s += NB_THREAD;
+	}
+    }
+
+
+/*----------------------------------------------------------------------*\
+|*			End	                    *|
+\*---------------------------------------------------------------------*/
